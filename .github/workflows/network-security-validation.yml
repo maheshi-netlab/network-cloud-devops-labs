@@ -1,0 +1,26 @@
+name: Network Security Configuration Validation
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-network-config:
+    name: Validate Network Configuration
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Make Validation Script Executable
+        run: chmod +x scripts/validate_network_config.sh
+
+      - name: Run Network Configuration Validation
+        run: bash scripts/validate_network_config.sh
