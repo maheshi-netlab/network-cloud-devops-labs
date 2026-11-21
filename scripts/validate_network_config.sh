@@ -1,16 +1,17 @@
 #!/bin/bash
 
-CONFIG_FILE="config/network.conf"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE="${SCRIPT_DIR}/../config/network.conf"
 FAILURES=0
-
-echo "===================================="
-echo " Network Configuration Validation"
-echo "===================================="
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "FAIL: Configuration file missing"
     exit 1
 fi
+
+echo "===================================="
+echo " Network Configuration Validation"
+echo "===================================="
 
 echo "PASS: Configuration file exists"
 
