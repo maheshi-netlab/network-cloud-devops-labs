@@ -1,0 +1,11 @@
+{
+  "hostname": "fw-prod-01",
+  "management_ip": "192.168.1.10",
+  "vendor": "Palo Alto",
+  "enabled": true,
+  "allowed_services": [
+    "SSH",
+    "HTTPS",
+    "DNS"
+  ]
+}
