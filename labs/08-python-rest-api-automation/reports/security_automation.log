@@ -1,0 +1,19 @@
+2026-11-24 14:46:49,281 - INFO - Network security automation started
+2026-11-24 14:46:49,281 - INFO - Firewall configuration loaded
+2026-11-24 14:46:49,281 - WARNING - Security policy requires review
+2026-11-24 14:46:49,281 - ERROR - Example API error event
+2026-11-24 14:47:40,752 - INFO - Security analyzer started
+2026-11-24 14:47:40,834 - INFO - Test API connectivity successful
+2026-11-24 14:47:40,835 - INFO - Loading firewall configuration
+2026-11-24 14:47:40,835 - INFO - Policy reviewed: Allow-HTTPS
+2026-11-24 14:47:40,835 - INFO - Policy reviewed: Allow-SSH
+2026-11-24 14:47:40,835 - INFO - Telnet deny rule verified
+2026-11-24 14:47:40,856 - INFO - Security report generated: reports/integrated_security_report.txt
+2026-11-24 14:47:40,857 - INFO - Analysis completed: critical=0 secure=1 info=2
+2026-11-24 14:47:40,857 - INFO - Security analyzer completed
+2026-11-24 14:49:16,284 - INFO - Policy reviewed: Allow-HTTPS
+2026-11-24 14:49:16,285 - CRITICAL - Insecure Telnet rule detected: Allow-Telnet
+2026-11-24 14:49:16,285 - INFO - Telnet deny rule verified
+2026-11-24 14:52:16,880 - INFO - Policy reviewed: Allow-HTTPS
+2026-11-24 14:52:16,880 - CRITICAL - Insecure Telnet rule detected: Allow-Telnet
+2026-11-24 14:52:16,880 - INFO - Telnet deny rule verified

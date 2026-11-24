@@ -1,0 +1,18 @@
+FIREWALL SECURITY REPORT
+========================
+Firewall: PA-FW-PROD-01
+
+Rule: Allow-HTTPS
+INFO: Rule reviewed
+
+Rule: Allow-SSH
+INFO: Rule reviewed
+
+Rule: Block-Telnet
+SECURE: Telnet traffic is denied
+
+SUMMARY
+-------
+Total rules: 3
+Critical findings: 0
+Secure rules: 1

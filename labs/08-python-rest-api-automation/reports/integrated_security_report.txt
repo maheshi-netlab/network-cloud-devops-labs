@@ -1,0 +1,29 @@
+INTEGRATED NETWORK SECURITY REPORT
+==================================
+Generated: 2026-11-24 14:47:40
+Firewall: PA-FW-PROD-01
+Management IP: 192.168.1.10
+Vendor: Palo Alto
+Environment: production
+Test API Connectivity: SUCCESS (HTTP 200)
+
+FIREWALL POLICY ANALYSIS
+------------------------
+Rule: Allow-HTTPS
+Severity: INFO
+Finding: Rule reviewed
+
+Rule: Allow-SSH
+Severity: INFO
+Finding: Rule reviewed
+
+Rule: Block-Telnet
+Severity: SECURE
+Finding: Telnet traffic is denied
+
+SUMMARY
+-------
+Total rules: 3
+Critical findings: 0
+Secure rules: 1
+Informational rules: 2
