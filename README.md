@@ -19,7 +19,7 @@ The labs use networking and security scenarios to develop skills progressively�
 
 ## Learning roadmap
 
-Lab status reflects work completed and verified through **Lab 08**. Future topics are planned learning milestones.
+Lab status reflects work completed and verified through **Lab 09**. Future topics are planned learning milestones.
 
 | Lab | Focus | Status |
 |---|---|---|
@@ -31,13 +31,14 @@ Lab status reflects work completed and verified through **Lab 08**. Future topic
 | 06 | Python fundamentals and firewall configuration validation | Completed |
 | 07 | REST API fundamentals, HTTP methods, headers, status codes, and authentication concepts | Completed |
 | 08 | Python REST API security automation, firewall policy analysis, reporting, logging, unit testing, and CI integration | Completed |
-| 09 | Terraform fundamentals and Infrastructure as Code | Next |
-| 10 | AWS and Azure cloud networking | Planned |
-| 11 | Advanced CI/CD and infrastructure automation | Planned |
-| 12 | Docker and Kubernetes | Planned |
-| 13 | Ansible automation | Planned |
-| 14 | DevSecOps, monitoring, and security validation | Planned |
-| 15 | Network and cloud security automation capstone | Planned |
+| 09 | Terraform fundamentals, AWS networking, reusable modules, and state migration | Completed |
+| 10 | Advanced Terraform: remote state, S3 backend, state locking, and workspaces | Next |
+| 11 | AWS and Azure cloud networking | Planned |
+| 12 | Advanced CI/CD and infrastructure automation | Planned |
+| 13 | Docker and Kubernetes | Planned |
+| 14 | Ansible automation | Planned |
+| 15 | DevSecOps, monitoring, and security validation | Planned |
+| 16 | Network and cloud security automation capstone | Planned |
 
 ## Lab progress
 
@@ -138,9 +139,30 @@ Lab status reflects work completed and verified through **Lab 08**. Future topic
 
 **Verification:** Three firewall analyzer unit tests passed locally. The GitHub Actions run for commit `45d4dc0` completed successfully, including the network configuration validation and Python unit tests. The run displayed a Node.js 20 deprecation warning for the action versions in use; it did not fail the workflow.
 
+### Lab 09 — Terraform fundamentals and AWS network infrastructure
+
+**Topics**
+- Terraform purpose, workflow, and HCL configuration.
+- AWS provider configuration and version constraints.
+- Input variables, local values, outputs, and resource dependencies.
+- Terraform plan, apply, state inspection, and validation.
+- AWS VPC, public/private subnets, internet gateway, route tables, routes, and associations.
+- EC2 deployment and security group rules.
+- Reusable Terraform modules and module inputs/outputs.
+- Terraform state migration using `moved` blocks.
+- Safe infrastructure cleanup using a saved destroy plan.
+
+**Practical work:** Deployed a network lab in AWS `us-east-1` with a VPC (`10.10.0.0/16`), public and private subnets, an internet gateway, route tables, a security group, and an EC2 instance. Refactored the network resources into a reusable `modules/network` module while preserving existing infrastructure and state addresses with `moved` blocks.
+
+**Validation:** Ran `terraform init`, `terraform validate`, and `terraform plan`. The module migration completed with zero resources added, changed, or destroyed, and a subsequent plan reported no changes.
+
+**Cleanup:** Created and reviewed a saved `terraform plan -destroy` plan before applying it. Terraform reported **11 resources destroyed**. Final verification confirmed an empty Terraform state, the EC2 instance in the `terminated` state, and the VPC no longer existing. The Terraform source code remains in GitHub; state files, local variable files, and plan files are excluded from version control.
+
+**Repository source:** [Lab 09 — Terraform fundamentals](https://github.com/maheshi-netlab/network-cloud-devops-labs/tree/main/labs/09-terraform-fundamentals)
+
 ## Repository layout
 
-The repository currently includes the following lab and automation assets:
+The repository includes the following lab and automation assets (not every file is shown):
 
 ```text
 network-cloud-devops-labs/
@@ -153,37 +175,31 @@ network-cloud-devops-labs/
 │   └── validate_network_config.sh
 ├── labs/
 │   ├── 02-advanced-git/
-│   │   ├── README.md
-│   │   ├── network-security.conf
-│   │   └── docs/
-│   │       └── merge-conflict-resolution.md
 │   ├── 05-json-fundamentals/
 │   ├── 06-python-fundamentals/
-│   └── 08-python-rest-api-automation/
-│       ├── data/
-│       │   └── firewall_policies.json
-│       ├── reports/
-│       │   ├── firewall_security_report.txt
-│       │   ├── integrated_security_report.txt
-│       │   └── security_automation.log
-│       ├── api_authentication.py
-│       ├── api_custom_headers.py
-│       ├── api_data_validator.py
-│       ├── api_error_handling.py
-│       ├── api_get_request.py
-│       ├── api_response_headers.py
-│       ├── firewall_analyzer.py
-│       ├── firewall_api_client.py
-│       ├── firewall_report.py
-│       ├── inspect_api_response.py
-│       ├── integrated_api_client.py
-│       ├── integrated_security_analyzer.py
-│       ├── logging_demo.py
-│       ├── requirements.txt
-│       ├── test_firewall_analyzer.py
-│       └── validate_firewall_networks.py
+│   ├── 08-python-rest-api-automation/
+│   └── 09-terraform-fundamentals/
+│       ├── modules/
+│       │   └── network/
+│       │       ├── main.tf
+│       │       ├── variables.tf
+│       │       ├── outputs.tf
+│       │       ├── subnets.tf
+│       │       ├── internet-gateway.tf
+│       │       ├── route-tables.tf
+│       │       └── route-associations.tf
+│       ├── ec2.tf
+│       ├── locals.tf
+│       ├── main.tf
+│       ├── moved.tf
+│       ├── outputs.tf
+│       ├── providers.tf
+│       ├── security-groups.tf
+│       └── variables.tf
 └── README.md
 ```
+
+Terraform working directories, state files, local `.tfvars` files, and saved plan files are excluded from Git by `.gitignore`.
 
 ## Technology areas
 
@@ -198,7 +214,7 @@ network-cloud-devops-labs/
 | Network validation | IP addresses, CIDR networks, firewall policy checks |
 | Testing and quality | ShellCheck, bash syntax checks, Python unittest |
 | Reporting and observability | Python logging, text reports |
-| Infrastructure as Code | Terraform |
+| Infrastructure as Code | Terraform, HCL, modules, state |
 | Cloud | AWS, Microsoft Azure |
 | Containers and orchestration | Docker, Kubernetes |
 | Configuration management | Ansible |
@@ -219,23 +235,24 @@ Each exercise follows a repeatable learning cycle:
 **Practice environments**
 - Windows with Visual Studio Code.
 - Linux using KodeKloud sandbox environments.
+- AWS CloudShell for AWS and Terraform exercises.
 - GitHub repository and GitHub Actions.
 
 The learning pace is intentionally incremental: one concept and exercise at a time, with validation before moving forward.
 
-## Next milestone — Lab 09: Terraform fundamentals
+## Next milestone — Lab 10: Advanced Terraform
 
-The next stage introduces Infrastructure as Code and builds on the Linux, Git, JSON, Python, and API skills developed in the completed labs.
+Lab 10 builds on the AWS infrastructure and reusable module developed in Lab 09. The focus is managing Terraform state safely and using Terraform in a more collaborative, production-oriented workflow.
 
 Planned topics include:
 
-- Terraform purpose and workflow.
-- HCL syntax and configuration blocks.
-- Providers, resources, and data sources.
-- Input variables and outputs.
-- Terraform plan and apply.
-- State fundamentals.
-- A practical cloud networking example.
+- Terraform state internals and state commands.
+- Remote state using an Amazon S3 backend.
+- State locking and safe concurrent operations.
+- Backend initialization and migration.
+- Terraform workspaces and environment separation.
+- Reusing and versioning Terraform modules.
+- State backup, recovery, and operational best practices.
 
 ## Capstone direction
 
@@ -255,6 +272,8 @@ The planned capstone will bring together Python, JSON, REST APIs, Bash, cloud ne
 [GitHub — maheshi-netlab/network-cloud-devops-labs](https://github.com/maheshi-netlab/network-cloud-devops-labs)
 
 [Lab 08 — Python REST API Automation](https://github.com/maheshi-netlab/network-cloud-devops-labs/tree/main/labs/08-python-rest-api-automation)
+
+[Lab 09 — Terraform Fundamentals](https://github.com/maheshi-netlab/network-cloud-devops-labs/tree/main/labs/09-terraform-fundamentals)
 
 ---
 
